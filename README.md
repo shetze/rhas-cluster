@@ -13,6 +13,7 @@ This repository deploys the [Red Hat Automotive Suite](https://github.com/rhadp)
 | Requirement | Details |
 |---|---|
 | Python 3.9+ | With `pip` and `venv` |
+| Openshift CLI | With `oc` and `helm` |
 | Cloud account | AWS or GCP with sufficient quota |
 | Red Hat pull secret | From [console.redhat.com/openshift](https://console.redhat.com/openshift/create) |
 | DNS domain | A base domain delegated to your cloud provider (e.g. Route 53) |

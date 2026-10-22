@@ -75,3 +75,6 @@ all:
 
     # local directory where the cluster metadata will be stored
     cluster_metadata_dir: "$HOME/.openshift"
+
+    # default shell needs internal source command
+    ansible_shell_executable: /bin/bash
