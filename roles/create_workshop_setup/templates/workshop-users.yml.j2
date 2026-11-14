@@ -1,0 +1,28 @@
+# payload for POST /admin/realms/{realm}/partialImport
+# adds the users to the existing realm without touching the rest of its configuration
+ifResourceExists: "{{ workshop_if_resource_exists }}"
+users:
+{% for i in range(1, (workshop_user_count | int) + 1) %}
+{% set username = workshop_user_prefix ~ ('%02d' | format(i)) %}
+  - username: "{{ username }}"
+    email: "{{ username }}@{{ workshop_user_email_domain }}"
+    emailVerified: true
+    enabled: true
+    firstName: "Workshop"
+    lastName: "User {{ '%02d' | format(i) }}"
+{% if workshop_user_password_temporary | bool %}
+    # the import ignores credentials[].temporary, only the required action forces the password change
+    requiredActions:
+      - UPDATE_PASSWORD
+{% endif %}
+    credentials:
+      - type: password
+        value: "{{ workshop_user_password }}"
+        temporary: {{ workshop_user_password_temporary | bool | lower }}
+    realmRoles:
+      - "default-roles-{{ workshop_keycloak_realm }}"
+    groups:
+{% for group in workshop_user_groups %}
+      - "{{ group }}"
+{% endfor %}
+{% endfor %}
